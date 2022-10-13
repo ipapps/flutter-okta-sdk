@@ -17,6 +17,7 @@ A new flutter plugin project.
   s.dependency 'Flutter'
   s.dependency 'OktaOidc'
   s.dependency 'OktaJWT'
+  s.dependency 'OktaAuthSdk'
 
   s.platform = :ios, '12.0'
 
