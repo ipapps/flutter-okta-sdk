@@ -1,6 +1,7 @@
 package com.sonikro.flutter_okta_sdk.okta.operations
 
 import android.app.Activity
+import android.util.Log
 import com.okta.oidc.AuthorizationStatus
 import com.okta.oidc.ResultCallback
 import com.okta.oidc.Tokens
@@ -15,10 +16,11 @@ import java.lang.Exception
 fun registerCallback(activity: Activity) {
     val sessionClient: SessionClient = OktaClient.getWebClient().sessionClient
 
-    try{
+    try {
         // Try to unregister callbacks loaded by signIn/signOut methods
         OktaClient.getWebClient().unregisterCallback()
-    }catch(ex: Exception){}
+    } catch (ex: Exception) {
+    }
 
     OktaClient.getWebClient().registerCallback(object : ResultCallback<AuthorizationStatus?, AuthorizationException?> {
         override fun onSuccess(status: AuthorizationStatus) {
@@ -37,7 +39,7 @@ fun registerCallback(activity: Activity) {
                     //result[Constants.ERROR_CODE_KEY] = Errors.SIGN_IN_FAILED.errorCode
                     //result[Constants.ERROR_MSG_KEY] = Errors.SIGN_IN_FAILED.errorMessage
 
-                    PendingOperation.error(Errors.SIGN_IN_FAILED,Errors.SIGN_IN_FAILED.errorMessage )
+                    PendingOperation.error(Errors.SIGN_IN_FAILED, Errors.SIGN_IN_FAILED.errorMessage)
                 }
             } else if (status == AuthorizationStatus.SIGNED_OUT) {
                 sessionClient.clear()
@@ -53,12 +55,14 @@ fun registerCallback(activity: Activity) {
             //result[Constants.ERROR_CODE_KEY] = Errors.OKTA_OIDC_ERROR.errorMessage
             //result[Constants.ERROR_MSG_KEY] = msg
 
-            PendingOperation.error(Errors.OKTA_OIDC_ERROR, Errors.OKTA_OIDC_ERROR.errorMessage,msg)
+            Log.e("toto", msg ?: "toti")
+            Log.e("toto", exception?.toString())
+            PendingOperation.error(Errors.OKTA_OIDC_ERROR, Errors.OKTA_OIDC_ERROR.errorMessage, msg)
         }
 
         override fun onCancel() {
-          //  val result = mutableMapOf<Any, Any?>()
-           // result[Constants.RESOLVE_TYPE_KEY] = Constants.CANCELLED
+            //  val result = mutableMapOf<Any, Any?>()
+            // result[Constants.RESOLVE_TYPE_KEY] = Constants.CANCELLED
             PendingOperation.error(Errors.CANCELLED_ERROR, Errors.CANCELLED_ERROR.errorMessage)
         }
     }, activity)

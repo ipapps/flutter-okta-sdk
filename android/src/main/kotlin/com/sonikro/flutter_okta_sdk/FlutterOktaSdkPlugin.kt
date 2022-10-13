@@ -3,6 +3,7 @@ package com.sonikro.flutter_okta_sdk
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import androidx.annotation.NonNull
 import com.sonikro.flutter_okta_sdk.okta.entities.*
 import com.sonikro.flutter_okta_sdk.okta.operations.*
@@ -28,7 +29,7 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
     companion object {
         fun registerWith(registrar: Registrar) {
             val plugin = FlutterOktaSdkPlugin()
-            plugin.setActivity(registrar.activity())
+            plugin.setActivity(registrar.activity()!!)
             plugin.onAttachedToEngine(registrar.context(), registrar.messenger())
             registrar.addActivityResultListener(plugin)
         }
@@ -66,12 +67,12 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        val arguments = call.arguments<Map<String, Any>>()
+        Log.d("okta plugin", "on call les methodes")
+        val arguments = call.arguments<Map<String, Any>?>()
         PendingOperation.init(call.method, result)
 
         if (applicationContext == null)
             PendingOperation.error(Errors.NO_CONTEXT)
-
         try {
             when (call.method) {
                 AvailableMethods.CREATE_CONFIG.methodName -> {
@@ -79,6 +80,9 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
                 }
                 AvailableMethods.SIGN_IN.methodName -> {
                     signIn(this.mainActivity!!)
+                }
+                AvailableMethods.SIGN_IN_CUSTOM.methodName -> {
+                    signInCustom(this.mainActivity!!)
                 }
                 AvailableMethods.SIGN_OUT.methodName -> {
                     signOut(this.mainActivity!!)

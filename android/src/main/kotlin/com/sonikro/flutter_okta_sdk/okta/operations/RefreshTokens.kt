@@ -23,7 +23,7 @@ fun refreshTokens() {
         }
 
         override fun onError(e: String?, exception: AuthorizationException?) {
-            PendingOperation.error(Errors.OKTA_OIDC_ERROR, exception.errorDescription)
+            PendingOperation.error(Errors.OKTA_OIDC_ERROR, exception?.errorDescription)
         }
     })
 }

@@ -5,7 +5,7 @@ import com.okta.oidc.clients.AuthClient
 import com.okta.oidc.clients.web.WebAuthClient
 
 object OktaClient {
-    var isInitilized: Boolean = false
+    var isInitialized: Boolean = false
     private var config: OIDCConfig? = null
     private var webClient: WebAuthClient? = null
     private var authClient: AuthClient? = null
@@ -14,25 +14,25 @@ object OktaClient {
         this.config = config
         this.webClient = webClient
         this.authClient = authClient
-        isInitilized = true
+        isInitialized = true
     }
 
     fun getConfig(): OIDCConfig {
-        if (!isInitilized) {
+        if (!isInitialized) {
             throw IllegalStateException(Errors.NOT_CONFIGURED.errorMessage)
         }
         return this.config!!
     }
 
     fun getWebClient(): WebAuthClient {
-        if (!isInitilized) {
+        if (!isInitialized) {
             throw IllegalStateException(Errors.NOT_CONFIGURED.errorMessage)
         }
         return this.webClient!!
     }
 
     fun getAuthClient(): AuthClient {
-        if (!isInitilized) {
+        if (!isInitialized) {
             throw IllegalStateException(Errors.NOT_CONFIGURED.errorMessage)
         }
         return this.authClient!!

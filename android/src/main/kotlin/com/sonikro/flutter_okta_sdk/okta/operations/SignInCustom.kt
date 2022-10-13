@@ -14,10 +14,8 @@ import com.sonikro.flutter_okta_sdk.okta.entities.OktaClient
 import com.sonikro.flutter_okta_sdk.okta.entities.PendingOperation
 
 
-fun signIn(activity: Activity) {
-    println("cdscs");
+fun signInCustom(activity: Activity) {
     registerCallback(activity)
-    println("cc");
     OktaClient.getWebClient().signIn(activity, null)
 }
 
