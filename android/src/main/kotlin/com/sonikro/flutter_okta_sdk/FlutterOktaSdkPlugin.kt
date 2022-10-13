@@ -82,7 +82,7 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
                     signIn(this.mainActivity!!)
                 }
                 AvailableMethods.SIGN_IN_CUSTOM.methodName -> {
-                    signInCustom(this.mainActivity!!)
+                    signInCustom()
                 }
                 AvailableMethods.SIGN_OUT.methodName -> {
                     signOut(this.mainActivity!!)
