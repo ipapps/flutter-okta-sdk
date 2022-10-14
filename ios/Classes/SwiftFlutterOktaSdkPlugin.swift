@@ -7,6 +7,20 @@ import OktaAuthSdk
 
 let CHANNEL_NAME: String! = "com.sonikro.flutter_okta_sdk";
 
+enum ErrorCode: String {
+    case NOT_CONFIGURED = "-100"
+    case NO_VIEW = "-200"
+    case NO_ID_TOKEN = "-500"
+    case OKTA_OIDC_ERROR = "-600"
+    case ERROR_TOKEN_TYPE = "-700"
+    case NO_ACCESS_TOKEN = "-900"
+    case SIGN_IN_FAILED = "-1000"
+    case GENERIC_ERROR = "-1100"
+    case METHOD_NOT_IMPLEMENTED = "-1200"
+    case NO_CONTEXT = "-1300"
+    case CANCELLED_ERROR = "-1400"
+    case SIGN_OUT_FAILED = "-1500"
+}
 
 struct FlutterOktaError: Error {
     let message: String
@@ -78,7 +92,7 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
         case "signIn":
             signIn(callback: { error in
                 if(error != nil) {
-                    let flutterError: FlutterError = FlutterError(code: "SignIn_Error", message: error?.localizedDescription, details: error.debugDescription);
+                    let flutterError: FlutterError = FlutterError(code: ErrorCode.SIGN_IN_FAILED.rawValue, message: error?.localizedDescription, details: error.debugDescription);
                     result(flutterError);
                     return
                 }
@@ -101,7 +115,7 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
             }
             signInCustom(username: username, password: password, callback: { error in
                 if(error != nil) {
-                    let flutterError: FlutterError = FlutterError(code: "SignInCustom_Error", message: "\(error)", details: "\(error)");
+                    let flutterError: FlutterError = FlutterError(code: ErrorCode.SIGN_IN_FAILED.rawValue, message: "\(ErrorCode.SIGN_IN_FAILED)", details: "\(error)");
                     result(flutterError);
                     return
                 }
