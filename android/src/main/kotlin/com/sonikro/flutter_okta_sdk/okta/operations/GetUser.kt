@@ -10,7 +10,7 @@ import com.sonikro.flutter_okta_sdk.okta.entities.PendingOperation
 
 
 fun getUser() {
-    val sessionClient = OktaClient.getWebClient().sessionClient
+    val sessionClient = OktaClient.getAuthClient().sessionClient
     sessionClient.getUserProfile(object : RequestCallback<UserInfo, AuthorizationException> {
         override fun onSuccess(result: UserInfo) {
             PendingOperation.success(result.toString())

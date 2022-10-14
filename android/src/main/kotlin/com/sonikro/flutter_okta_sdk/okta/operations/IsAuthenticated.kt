@@ -5,7 +5,7 @@ import com.sonikro.flutter_okta_sdk.okta.entities.OktaClient
 import com.sonikro.flutter_okta_sdk.okta.entities.PendingOperation
 
 fun isAuthenticated() {
-    val sessionClient = OktaClient.getWebClient().sessionClient
+    val sessionClient = OktaClient.getAuthClient().sessionClient
     PendingOperation.success(sessionClient.isAuthenticated)
 }
 

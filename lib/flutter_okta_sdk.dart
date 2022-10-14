@@ -28,7 +28,7 @@ class OktaSDK {
     return await _channel.invokeMethod('signIn');
   }
 
-  Future<String?> signOut() async {
+  Future<bool?> signOut() async {
     if (isInitialized == false) {
       throw Exception("Cannot sign out before initializing Okta SDK");
     }

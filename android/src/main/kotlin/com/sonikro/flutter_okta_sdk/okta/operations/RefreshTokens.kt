@@ -9,7 +9,7 @@ import com.sonikro.flutter_okta_sdk.okta.entities.OktaClient
 import com.sonikro.flutter_okta_sdk.okta.entities.PendingOperation
 
 fun refreshTokens() {
-    OktaClient.getWebClient().sessionClient.refreshToken(object : RequestCallback<Tokens, AuthorizationException> {
+    OktaClient.getAuthClient().sessionClient.refreshToken(object : RequestCallback<Tokens, AuthorizationException> {
         override fun onSuccess(result: Tokens) {
             val params = mutableMapOf<Any, Any?>()
             params[Constants.ACCESS_TOKEN_KEY] = result.accessToken

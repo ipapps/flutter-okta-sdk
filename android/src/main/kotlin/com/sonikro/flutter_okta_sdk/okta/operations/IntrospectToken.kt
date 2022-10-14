@@ -22,7 +22,7 @@ fun introspectRefreshToken() {
 }
 
 fun introspectToken(tokenName: String) {
-    var sessionClient = OktaClient.getWebClient().sessionClient
+    val sessionClient = OktaClient.getAuthClient().sessionClient
     val tokens = sessionClient.tokens
     val token = when (tokenName) {
         TokenTypeHint.ACCESS_TOKEN -> tokens.accessToken!!
@@ -33,7 +33,7 @@ fun introspectToken(tokenName: String) {
         }
     }
 
-    OktaClient.getWebClient().sessionClient.introspectToken(token, tokenName, object : RequestCallback<IntrospectInfo, AuthorizationException> {
+    sessionClient.introspectToken(token, tokenName, object : RequestCallback<IntrospectInfo, AuthorizationException> {
         override fun onSuccess(result: IntrospectInfo) {
             val params = mutableMapOf<Any, Any?>()
 

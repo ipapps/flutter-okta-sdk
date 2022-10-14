@@ -2,8 +2,7 @@ package com.sonikro.flutter_okta_sdk.okta.entities
 
 enum class AvailableMethods(val methodName: String) {
     CREATE_CONFIG("createConfig"),
-    SIGN_IN("signIn"),
-    SIGN_IN_CUSTOM("signInCustom"),
+    SIGN_IN("signInCustom"),
     SIGN_OUT("signOut"),
     AUTHENTICATE("authenticate"),
     GET_ACCESS_TOKEN("getAccessToken"),

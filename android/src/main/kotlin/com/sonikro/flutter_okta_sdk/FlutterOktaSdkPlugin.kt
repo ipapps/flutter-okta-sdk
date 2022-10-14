@@ -1,28 +1,23 @@
 package com.sonikro.flutter_okta_sdk
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import androidx.annotation.NonNull
-import com.sonikro.flutter_okta_sdk.okta.entities.*
+import com.sonikro.flutter_okta_sdk.okta.entities.AvailableMethods
+import com.sonikro.flutter_okta_sdk.okta.entities.Errors
+import com.sonikro.flutter_okta_sdk.okta.entities.PendingOperation
 import com.sonikro.flutter_okta_sdk.okta.operations.*
 import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.plugins.activity.ActivityAware
-import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-import io.flutter.plugin.common.PluginRegistry
 
 /** FlutterOktaSdkPlugin */
-class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
-    PluginRegistry.ActivityResultListener, ActivityAware {
+class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler {
     private lateinit var channel: MethodChannel
 
     private var applicationContext: Context? = null
-    private var mainActivity: Activity? = null
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         this.onAttachedToEngine(
@@ -33,29 +28,6 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
-        OktaClient.getWebClient().handleActivityResult(requestCode, resultCode, data)
-        return PendingOperation.hasPendingOperation != null
-    }
-
-    override fun onDetachedFromActivity() {
-        this.mainActivity = null
-    }
-
-    override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {
-        binding.addActivityResultListener(this)
-        mainActivity = binding.activity
-    }
-
-    override fun onAttachedToActivity(binding: ActivityPluginBinding) {
-        binding.addActivityResultListener(this)
-        mainActivity = binding.activity
-    }
-
-    override fun onDetachedFromActivityForConfigChanges() {
-        this.mainActivity = null
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
@@ -70,15 +42,12 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
                     createConfig(arguments, applicationContext!!)
                 }
                 AvailableMethods.SIGN_IN.methodName -> {
-                    signIn(this.mainActivity!!)
-                }
-                AvailableMethods.SIGN_IN_CUSTOM.methodName -> {
                     val username = arguments?.get("username") as? String ?: ""
                     val password = arguments?.get("password") as? String ?: ""
-                    signInCustom(username, password)
+                    signIn(username, password)
                 }
                 AvailableMethods.SIGN_OUT.methodName -> {
-                    signOut(this.mainActivity!!)
+                    signOut()
                 }
                 AvailableMethods.GET_USER.methodName -> {
                     getUser()

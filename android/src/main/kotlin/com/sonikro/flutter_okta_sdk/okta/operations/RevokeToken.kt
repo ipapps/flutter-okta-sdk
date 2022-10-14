@@ -21,7 +21,7 @@ fun revokeRefreshToken() {
 }
 
 private fun revokeToken(tokenName: String) {
-    var sessionClient = OktaClient.getWebClient().sessionClient
+    val sessionClient = OktaClient.getAuthClient().sessionClient
     val tokens = sessionClient.tokens
     val token = when (tokenName) {
         TokenTypeHint.ACCESS_TOKEN -> tokens.accessToken
