@@ -229,6 +229,9 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
     func createConfig(configuration: [String:String], callback: ((Error?) -> (Void))) {
         do {
             let oktaConfiguration: OktaOidcConfig = try OktaOidcConfig(with: configuration);
+            if #available(iOS 13, *) {
+                oktaConfiguration.noSSO = true
+            }
             self.oktaOidc = try OktaOidc(configuration: oktaConfiguration);
         } catch let error {
             print("okta object creation error \(error)");
