@@ -3,7 +3,6 @@ package com.sonikro.flutter_okta_sdk
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.annotation.NonNull
 import com.sonikro.flutter_okta_sdk.okta.entities.*
 import com.sonikro.flutter_okta_sdk.okta.operations.*
@@ -16,7 +15,6 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import io.flutter.plugin.common.PluginRegistry
-import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FlutterOktaSdkPlugin */
 class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
@@ -25,15 +23,6 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
 
     private var applicationContext: Context? = null
     private var mainActivity: Activity? = null
-
-    companion object {
-        fun registerWith(registrar: Registrar) {
-            val plugin = FlutterOktaSdkPlugin()
-            plugin.setActivity(registrar.activity()!!)
-            plugin.onAttachedToEngine(registrar.context(), registrar.messenger())
-            registrar.addActivityResultListener(plugin)
-        }
-    }
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
         this.onAttachedToEngine(
@@ -70,7 +59,6 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
     }
 
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-        Log.d("okta plugin", "on call les methodes")
         val arguments = call.arguments<Map<String, Any>?>()
         PendingOperation.init(call.method, result)
 
@@ -138,10 +126,6 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
         } catch (ex: java.lang.Exception) {
             PendingOperation.error(Errors.GENERIC_ERROR, ex.localizedMessage)
         }
-    }
-
-    fun setActivity(activity: Activity) {
-        this.mainActivity = activity
     }
 
     private fun onAttachedToEngine(context: Context, binaryMessenger: BinaryMessenger) {

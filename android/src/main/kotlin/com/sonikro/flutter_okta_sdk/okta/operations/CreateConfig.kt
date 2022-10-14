@@ -4,7 +4,6 @@ import android.content.Context
 import com.okta.oidc.OIDCConfig
 import com.okta.oidc.Okta
 import com.okta.oidc.storage.SharedPreferenceStorage
-import com.sonikro.flutter_okta_sdk.HttpClientImpl
 import com.sonikro.flutter_okta_sdk.okta.entities.Errors
 import com.sonikro.flutter_okta_sdk.okta.entities.OktaClient
 import com.sonikro.flutter_okta_sdk.okta.entities.OktaRequestParameters
@@ -25,7 +24,6 @@ fun createConfig(arguments: Map<String, Any>?, context: Context) {
                 .withConfig(config)
                 .withContext(context)
                 .withStorage(SharedPreferenceStorage(context))
-                .withOktaHttpClient(HttpClientImpl(params.userAgentTemplate))
                 .setRequireHardwareBackedKeyStore(params.requireHardwareBackedKeyStore)
                 .create()
 
@@ -33,7 +31,6 @@ fun createConfig(arguments: Map<String, Any>?, context: Context) {
                 .withConfig(config)
                 .withContext(context)
                 .withStorage(SharedPreferenceStorage(context))
-                .withOktaHttpClient(HttpClientImpl(params.userAgentTemplate))
                 .setRequireHardwareBackedKeyStore(params.requireHardwareBackedKeyStore)
                 .create()
 

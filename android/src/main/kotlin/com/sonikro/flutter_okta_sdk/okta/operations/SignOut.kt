@@ -1,10 +1,7 @@
 package com.sonikro.flutter_okta_sdk.okta.operations
 
 import android.app.Activity
-import com.okta.oidc.AuthorizationStatus
 import com.okta.oidc.RequestCallback
-import com.okta.oidc.ResultCallback
-import com.okta.oidc.clients.web.WebAuthClient
 import com.okta.oidc.util.AuthorizationException
 import com.sonikro.flutter_okta_sdk.okta.entities.Errors
 import com.sonikro.flutter_okta_sdk.okta.entities.OktaClient

@@ -1,7 +1,5 @@
 package com.sonikro.flutter_okta_sdk.okta.operations
 
-import android.app.Activity
-import android.util.Log
 import com.okta.authn.sdk.AuthenticationStateHandlerAdapter
 import com.okta.authn.sdk.client.AuthenticationClients
 import com.okta.authn.sdk.resource.AuthenticationResponse
@@ -13,7 +11,6 @@ import com.sonikro.flutter_okta_sdk.okta.entities.Errors
 import com.sonikro.flutter_okta_sdk.okta.entities.OktaClient
 import com.sonikro.flutter_okta_sdk.okta.entities.PendingOperation
 import kotlinx.coroutines.*
-
 
 fun signInCustom(username: String, password: String) {
     try {
@@ -28,7 +25,10 @@ fun signInCustom(username: String, password: String) {
                     "/",
                     object : AuthenticationStateHandlerAdapter() {
                         override fun handleUnknown(unknownResponse: AuthenticationResponse) {
-                            PendingOperation.error(Errors.SIGN_IN_FAILED, unknownResponse.toString())
+                            PendingOperation.error(
+                                Errors.SIGN_IN_FAILED,
+                                unknownResponse.toString()
+                            )
                         }
 
                         override fun handleSuccess(successResponse: AuthenticationResponse) {
