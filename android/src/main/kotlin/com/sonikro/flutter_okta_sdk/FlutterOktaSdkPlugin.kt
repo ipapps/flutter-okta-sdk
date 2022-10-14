@@ -20,7 +20,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar
 
 /** FlutterOktaSdkPlugin */
 class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
-        PluginRegistry.ActivityResultListener, ActivityAware {
+    PluginRegistry.ActivityResultListener, ActivityAware {
     private lateinit var channel: MethodChannel
 
     private var applicationContext: Context? = null
@@ -36,7 +36,10 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
     }
 
     override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        this.onAttachedToEngine(flutterPluginBinding.applicationContext, flutterPluginBinding.binaryMessenger)
+        this.onAttachedToEngine(
+            flutterPluginBinding.applicationContext,
+            flutterPluginBinding.binaryMessenger
+        )
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
@@ -82,7 +85,9 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
                     signIn(this.mainActivity!!)
                 }
                 AvailableMethods.SIGN_IN_CUSTOM.methodName -> {
-                    signInCustom()
+                    val username = arguments?.get("username") as? String ?: ""
+                    val password = arguments?.get("password") as? String ?: ""
+                    signInCustom(username, password)
                 }
                 AvailableMethods.SIGN_OUT.methodName -> {
                     signOut(this.mainActivity!!)
@@ -124,7 +129,10 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler,
                     refreshTokens()
                 }
                 else -> {
-                    PendingOperation.error(Errors.METHOD_NOT_IMPLEMENTED, "Method called: $call.method")
+                    PendingOperation.error(
+                        Errors.METHOD_NOT_IMPLEMENTED,
+                        "Method called: $call.method"
+                    )
                 }
             }
         } catch (ex: java.lang.Exception) {
