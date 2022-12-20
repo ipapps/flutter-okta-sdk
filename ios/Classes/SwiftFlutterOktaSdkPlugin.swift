@@ -402,11 +402,8 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
         else { callback?(nil) }
     }
 
-    func getAccessTokenExpiration(callback: ((Double?) -> (Void))? ) {
-        if let expiration = Int(stateManager?.authState.lastTokenResponse?.accessTokenExpirationDate?.timeIntervalSince1970 ?? 0.0) {
-            callback?(expiration)
-        }
-        else { callback?(nil) }
+    func getAccessTokenExpiration(callback: ((Int) -> (Void))? ) {
+        callback?(Int(stateManager?.authState.lastTokenResponse?.accessTokenExpirationDate?.timeIntervalSince1970 ?? 0.0)
     }
     
     func getIdToken(callback: ((String?) -> (Void))? ) {
