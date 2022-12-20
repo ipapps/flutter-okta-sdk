@@ -58,6 +58,12 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler {
                 AvailableMethods.GET_ACCESS_TOKEN.methodName -> {
                     getAccessToken()
                 }
+                AvailableMethods.GET_REFRESH_TOKEN.methodName -> {
+                    getRefreshToken()
+                }
+                AvailableMethods.GET_ACCESS_TOKEN_EXPIRATION.methodName -> {
+                    getAccessTokenExpiration()
+                }
                 AvailableMethods.GET_ID_TOKEN.methodName -> {
                     getIdToken()
                 }

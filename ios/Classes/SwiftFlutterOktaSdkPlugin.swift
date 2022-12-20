@@ -159,6 +159,18 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
                 result(token);
             })
             break;
+
+        case "getRefreshToken":
+            getRefreshToken(callback: { token in
+                result(token);
+            })
+            break;
+
+        case "getAccessTokenExpiration":
+            getAccessTokenExpiration(callback: { tokenExpiration in
+                result(tokenExpiration);
+            })
+            break;
             
         case "getIdToken":
             getIdToken(callback: { token in
@@ -379,6 +391,20 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
     func getAccessToken(callback: ((String?) -> (Void))? ) {
         if let accessToken = stateManager?.accessToken {
             callback?(accessToken)
+        }
+        else { callback?(nil) }
+    }
+
+    func getRefreshToken(callback: ((String?) -> (Void))? ) {
+        if let refreshToken = stateManager?.refreshToken {
+            callback?(refreshToken)
+        }
+        else { callback?(nil) }
+    }
+
+    func getAccessTokenExpiration(callback: ((double?) -> (Void))? ) {
+        if let expiration = Int(stateManager?.authState.lastTokenResponse?.accessTokenExpirationDate?.timeIntervalSince1970 ?? 0.0) {
+            callback?(expiration)
         }
         else { callback?(nil) }
     }

@@ -56,6 +56,20 @@ class OktaSDK {
     return await _channel.invokeMethod('getAccessToken');
   }
 
+  Future<String?> getRefreshToken() async {
+    if (isInitialized == false) {
+      throw Exception("Cannot get access token before initializing Okta SDK");
+    }
+    return await _channel.invokeMethod('getRefreshToken');
+  }
+
+  Future<DateTime?> getAccessTokenExpiration() async {
+    if (isInitialized == false) {
+      throw Exception("Cannot get access token before initializing Okta SDK");
+    }
+    return DateTime.fromMillisecondsSinceEpoch((await _channel.invokeMethod('getAccessTokenExpiration')) * 1000);
+  }
+
   Future<String?> getIdToken() async {
     if (isInitialized == false) {
       throw Exception("Cannot get id token before initializing Okta SDK");

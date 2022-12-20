@@ -6,6 +6,8 @@ enum class AvailableMethods(val methodName: String) {
     SIGN_OUT("signOut"),
     AUTHENTICATE("authenticate"),
     GET_ACCESS_TOKEN("getAccessToken"),
+    GET_REFRESH_TOKEN("getRefreshToken"),
+    GET_ACCESS_TOKEN_EXPIRATION("getAccessTokenExpiration"),
     GET_ID_TOKEN("getIdToken"),
     GET_USER("getUser"),
     IS_AUTHENTICATED("isAuthenticated"),
