@@ -42,9 +42,10 @@ class FlutterOktaSdkPlugin : FlutterPlugin, MethodCallHandler {
                     createConfig(arguments, applicationContext!!)
                 }
                 AvailableMethods.SIGN_IN.methodName -> {
+                    val host = arguments?.get("host") as? String ?: ""
                     val username = arguments?.get("username") as? String ?: ""
                     val password = arguments?.get("password") as? String ?: ""
-                    signIn(username, password)
+                    signIn(host, username, password)
                 }
                 AvailableMethods.SIGN_OUT.methodName -> {
                     signOut()

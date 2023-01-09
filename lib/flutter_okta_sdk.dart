@@ -14,11 +14,11 @@ class OktaSDK {
     isInitialized = true;
   }
 
-  Future<String?> signInCustom(String username, String password) async {
+  Future<String?> signInCustom(String host, String username, String password) async {
     if (isInitialized == false) {
       throw Exception("Cannot sign in before initializing Okta SDK");
     }
-    return await _channel.invokeMethod('signInCustom', Credentials(username, password).toCodec());
+    return await _channel.invokeMethod('signInCustom', Credentials(host, username, password).toCodec());
   }
 
   Future<bool> signIn() async {

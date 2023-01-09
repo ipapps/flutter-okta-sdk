@@ -1,11 +1,13 @@
 class Credentials {
+  final String host;
   final String username;
   final String password;
 
-  Credentials(this.username, this.password);
+  Credentials(this.host, this.username, this.password);
 
   Map<String, String> toCodec() => {
-        "username": username,
-        "password": password,
+        'host': host,
+        'username': username,
+        'password': password,
       };
 }

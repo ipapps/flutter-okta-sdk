@@ -8,10 +8,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-fun signIn(username: String, password: String) {
+fun signIn(host: String, username: String, password: String) {
     try {
         val client = AuthenticationClients.builder()
-            .setOrgUrl("https://login.stg.naomi.fr")
+            .setOrgUrl(host)
             .build()
         CoroutineScope(Dispatchers.IO).launch {
             try {

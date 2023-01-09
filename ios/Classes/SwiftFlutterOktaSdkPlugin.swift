@@ -105,6 +105,10 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
                 result(-1);
                 return;
             }
+            guard let host: String = args["host"] else {
+                result(-1);
+                return;
+            }
             guard let username: String = args["username"] else {
                 result(-1);
                 return;
@@ -113,7 +117,7 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
                 result(-1);
                 return;
             }
-            signInCustom(username: username, password: password, callback: { error in
+            signInCustom(host: host, username: username, password: password, callback: { error in
                 if(error != nil) {
                     let flutterError: FlutterError = FlutterError(code: ErrorCode.SIGN_IN_FAILED.rawValue, message: "\(ErrorCode.SIGN_IN_FAILED)", details: "\(error)");
                     result(flutterError);
@@ -282,7 +286,7 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
         }
     }
     
-    func signInCustom(username: String, password: String, callback: @escaping ((Error?) -> Void)) {
+    func signInCustom(host:String, username: String, password: String, callback: @escaping ((Error?) -> Void)) {
         if let oktaOidc = self.oktaOidc,
            let _ = stateManager?.accessToken {
             let options = ["iss": self.oktaOidc!.configuration.issuer, "exp": "true"]
@@ -292,15 +296,15 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
                 _ = stateManager!.accessToken
                 callback(nil)
             } catch {
-                signInWithUsernamePassword(username: username, password: password, callback: callback)
+                signInWithUsernamePassword(host: host, username: username, password: password, callback: callback)
             }
         } else {
-            signInWithUsernamePassword(username: username, password: password, callback: callback)
+            signInWithUsernamePassword(host: host, username: username, password: password, callback: callback)
         }
     }
     
-    func signInWithUsernamePassword(username: String, password: String, callback: @escaping ((Error?) -> Void)) {
-        OktaAuthSdk.authenticate(with: URL(string: "https://login.stg.naomi.fr")!,
+    func signInWithUsernamePassword(host:String, username: String, password: String, callback: @escaping ((Error?) -> Void)) {
+        OktaAuthSdk.authenticate(with: URL(string: host)!,
                                  username: username,
                                  password: password,
                                  onStatusChange: { [weak self] authStatus in
@@ -310,7 +314,7 @@ public class SwiftFlutterOktaSdkPlugin: NSObject, FlutterPlugin {
                     if let accessToken = authStateManager?.accessToken {
                         callback(nil)
                     } else {
-                        callback(FlutterOktaError(message: "A problem occurred. Access Token could not be retrieved after login."))
+                        callback(FlutterOktaError(message: "A problem occurred. Access Token could not be retrieved after login. \(error)"))
                     }
                 }
             } else {
