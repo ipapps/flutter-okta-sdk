@@ -36,6 +36,10 @@ android {
     }
     defaultConfig {
         minSdkVersion 21
+
+        manifestPlaceholders += [
+                "appAuthRedirectScheme": "app.naomi2"
+        ]
     }
     lintOptions {
         disable 'InvalidPackage'
